@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>History Sales Transaction</title>
+<link rel="icon" href="https://i.postimg.cc/NM2wYX5f/image-Photoroom.png" type="image/png">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+  overflow-x: hidden;
+  background: #000;
+}
+
+thead th:nth-child(4),
+tbody td:nth-child(4) {
+  text-align: left;
+}
+
+.video-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+
+.overlay {
+  position: fixed;
+  top:0; left:0;
+  width:100%;
+  height:100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 0;
+}
+
+.header-nav {
+  display: flex;
+  justify-content: space-between; 
+  align-items: center;
+  background: #222;
+  padding: 10px 20px;
+  border-bottom: 2px solid #ffd700;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-nav .logo img {
+  height: 50px;   
+  width: auto;
+  border-radius: 10px;
+}
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+.nav-list li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 5px 10px;
+  transition: 0.3s;
+}
+.nav-list li a:hover {
+  background: #ffd700;
+  color: black;
+  border-radius: 5px;
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 120px auto 50px auto;
+  padding: 0 20px;
+  overflow-x: auto;
+}
+
+h1 {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+}
+
+.filter-group {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.filter-group input,
+.filter-group select {
+  padding: 6px 10px;
+  margin: 0 5px 10px 5px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
+  border-radius: 10px;
+  overflow: hidden;
+  min-width: 1000px;
+}
+th, td {
+  padding: 12px 15px;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+  text-align: center;
+}
+th {
+  background: rgba(255,255,255,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+tr:hover { background: rgba(255,255,255,0.2); }
+
+@media(max-width:1200px){
+  table { font-size: 0.9rem; }
+}
+@media(max-width:600px){
+  h1 { font-size: 2rem; margin-top: 100px; }
+  .filter-group input,
+  .filter-group select { width: 90%; margin-bottom: 10px; }
+  th, td { font-size: 0.8rem; padding: 8px; }
+}
+</style>
+</head>
+<body>
+
+<video class="video-bg" autoplay muted loop>
+  <source src="https://cdn.pixabay.com/video/2019/12/09/30016-378309079_large.mp4" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+
+<div class="overlay"></div>
+
+<header class="header-nav">
+  <div class="logo">
+    <a href="index.html">
+      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png" alt="Logo">
+    </a>
+  </div>
+  <nav>
+    <ul class="nav-list">
+      <li><a href="index.html">Home</a></li>
+    </ul>
+  </nav>
+</header>
+
+<div class="container">
+  <h1>Nimbo History Sales Transaction</h1>
+
+  <div class="filter-group">
+    <input type="text" id="filter-nama" placeholder="Filter Nama...">
+    <select id="filter-agent">
+      <option value="">Filter Agent...</option>
+    </select>
+    <input type="date" id="filter-tanggal">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Tanggal</th>
+        <th>Jam</th>
+        <th>Nama</th>
+        <th>Rate</th>
+        <th>Dollar</th>
+        <th>Agent</th>
+        <th>Total</th>
+        <th>Currency</th>
+        <th>Modal</th>
+      </tr>
+    </thead>
+    <tbody id="history-body"></tbody>
+  </table>
+</div>
+
+<script>
+let allData = [];
+
+fetch('https://script.google.com/macros/s/AKfycbyMF5FhpYhtFOgVVa_0YWpMkuZj-nWFpaFmqEJCv9VZTWTSnVtQVXyv9W1X4EyP2Wp5/exec')
+  .then(res => res.json())
+  .then(data => {
+    allData = data;
+
+    allData.sort((a, b) => new Date(b.tanggal) - new Date(a.tanggal) || new Date(b.jam) - new Date(a.jam));
+
+    populateAgentDropdown();
+    renderTable(allData);
+  })
+  .catch(err => console.error('Error fetch history:', err));
+
+function renderTable(data) {
+  const tbody = document.getElementById('history-body');
+  tbody.innerHTML = '';
+
+  data.forEach((item, index) => {
+    let tanggal = new Date(item.tanggal);
+    let options = { day: 'numeric', month: 'short', year: 'numeric' };
+    let tanggalFormatted = isNaN(tanggal.getTime()) ? '-' : tanggal.toLocaleDateString('en-GB', options).replace(/ /g, ' ');
+    let jam = new Date(item.jam);
+    let jamFormatted = isNaN(jam.getTime()) ? '-' : jam.toLocaleTimeString('en-GB', { hour12: false });
+    let rateFormatted = (item.rate / 1000).toFixed(3);
+    let dollarFormatted = `$${item.dollar}`;
+    let totalFormatted = Number(item.total).toLocaleString('id-ID');
+    let modalFormatted = (item.modal / 1000).toFixed(3);
+
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${tanggalFormatted}</td>
+      <td>${jamFormatted}</td>
+      <td>${item.nama}</td>
+      <td>${rateFormatted}</td>
+      <td>${dollarFormatted}</td>
+      <td>${item.agent}</td>
+      <td>${totalFormatted}</td>
+      <td>${item.currency}</td>
+      <td>${modalFormatted}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function populateAgentDropdown() {
+  const agentSelect = document.getElementById('filter-agent');
+  const agents = [...new Set(allData.map(item => item.agent))];
+  agents.forEach(agent => {
+    const option = document.createElement('option');
+    option.value = agent.toLowerCase();
+    option.textContent = agent;
+    agentSelect.appendChild(option);
+  });
+}
+
+document.getElementById('filter-nama').addEventListener('input', filterData);
+document.getElementById('filter-agent').addEventListener('change', filterData);
+document.getElementById('filter-tanggal').addEventListener('change', filterData);
+
+function filterData() {
+  const namaVal = document.getElementById('filter-nama').value.toLowerCase();
+  const agentVal = document.getElementById('filter-agent').value.toLowerCase();
+  const tanggalVal = document.getElementById('filter-tanggal').value; // YYYY-MM-DD
+
+  const filtered = allData.filter(item => {
+    let tanggal = new Date(item.tanggal);
+    let tanggalISO = isNaN(tanggal.getTime()) ? '' : tanggal.toISOString().slice(0,10); // YYYY-MM-DD
+
+    return (
+      item.nama.toLowerCase().includes(namaVal) &&
+      item.agent.toLowerCase().includes(agentVal) &&
+      (tanggalVal === '' || tanggalISO === tanggalVal)
+    );
+  });
+
+  renderTable(filtered);
+}
+</script>
+
+</body>
+</html>
