@@ -255,11 +255,11 @@ document.getElementById('filter-tanggal').addEventListener('change', filterData)
 function filterData() {
   const namaVal = document.getElementById('filter-nama').value.toLowerCase();
   const agentVal = document.getElementById('filter-agent').value.toLowerCase();
-  const tanggalVal = document.getElementById('filter-tanggal').value; // YYYY-MM-DD
+  const tanggalVal = document.getElementById('filter-tanggal').value; 
 
   const filtered = allData.filter(item => {
     let tanggal = new Date(item.tanggal);
-    let tanggalISO = isNaN(tanggal.getTime()) ? '' : tanggal.toISOString().slice(0,10); // YYYY-MM-DD
+    let tanggalISO = isNaN(tanggal.getTime()) ? '' : tanggal.toISOString().slice(0,10); 
 
     return (
       item.nama.toLowerCase().includes(namaVal) &&
