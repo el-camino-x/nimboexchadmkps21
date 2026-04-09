@@ -4,10 +4,11 @@ function submitTransaction() {
   const nama = document.getElementById('nama').value;
   const rate = document.getElementById('rate').value;
   const usd = document.getElementById('usd').value;
+  const modal = document.getElementById('modal').value;
   const agent = document.getElementById('agent').value;
   const currency = document.getElementById('currency').value;
 
-  if (!nama || !rate || !usd) {
+  if (!nama || !rate || !usd || !modal) {
     alert("Isi semua dulu bosku!");
     return;
   }
@@ -24,6 +25,7 @@ function submitTransaction() {
   params.append("usd", usd);
   params.append("agent", agent);
   params.append("currency", currency);
+  params.append("modal", modal);
 
   fetch("https://script.google.com/macros/s/AKfycbzMq8atd8BLQc51ZW3U1lfQFaIw-zd52LUiSVBsjMUoZM21z0XdQNSryaeXBoe_f5pLkw/exec", {
     method: "POST",
