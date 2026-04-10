@@ -5,11 +5,55 @@ let allData = [];
 async function loadCustomer() {
   const res = await fetch(API_URL);
   allData = await res.json();
+
+  setupLevelFilter(allData);
   render();
 }
 
 function isEmpty(val) {
   return val === null || val === undefined || val === "" || val === "-";
+}
+
+function getLevelBadge(level) {
+  switch (level) {
+    case "CEO":
+      return "CEO 👑";
+    case "VIP":
+      return "VIP 💎";
+    case "REGULAR":
+      return "REGULAR ⭐";
+    case "NEW":
+      return "NEW 🆕";
+    default:
+      return level;
+  }
+}
+
+function setupLevelFilter(data) {
+  const select = document.getElementById("levelFilter");
+
+  let levels = [...new Set(
+    data.map(c => c.LEVEL).filter(v => !isEmpty(v))
+  )];
+
+  const order = ["CEO", "VIP", "REGULAR", "NEW"];
+
+  levels.sort((a, b) => {
+    const ia = order.indexOf(a);
+    const ib = order.indexOf(b);
+
+    if (ia === -1 && ib === -1) return a.localeCompare(b);
+    if (ia === -1) return 1;
+    if (ib === -1) return -1;
+
+    return ia - ib;
+  });
+
+  select.innerHTML = `<option value="ALL">ALL LEVEL</option>`;
+
+  levels.forEach(level => {
+    select.innerHTML += `<option value="${level}">${getLevelBadge(level)}</option>`;
+  });
 }
 
 function render() {
@@ -39,16 +83,14 @@ function render() {
   container.innerHTML = "";
 
   data.forEach(cust => {
-
     const div = document.createElement("div");
     div.className = "customer-card";
 
     div.innerHTML = `
       <div class="name">${cust.NAMA}</div>
+
       <div class="badge">
-        ${!isEmpty(cust.LEVEL) ? cust.LEVEL : ""} 
-        ${!isEmpty(cust.BADGES) ? cust.BADGES : ""} 
-        ${!isEmpty(cust.DANGER) ? cust.DANGER : ""}
+        ${!isEmpty(cust.LEVEL) ? getLevelBadge(cust.LEVEL) : ""}
       </div>
 
       ${!isEmpty(cust.TOTAL) ? `
@@ -80,7 +122,9 @@ function render() {
   });
 }
 
+
 document.addEventListener("input", render);
 document.addEventListener("change", render);
+
 
 loadCustomer();
