@@ -35,44 +35,40 @@ body, html {
 
 .header-nav {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
-  background: rgba(20,20,20,0.95);
-  padding: 8px 16px;
+  background: #222;
+  padding: 10px 20px;
   border-bottom: 2px solid #ffd700;
-
-  position: fixed;  
+  position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 999;
+  z-index: 100;
 }
-
+  
 .header-nav .logo img {
-  height: 45px;
-  border-radius: 8px;
+  height: 50px;   
+  width: auto;
+  border-radius: 10px;
 }
-
 .nav-list {
   list-style: none;
   display: flex;
-  gap: 10px;
   margin: 0;
   padding: 0;
 }
-
+  
 .nav-list li a {
   text-decoration: none;
   color: white;
   font-weight: bold;
-  padding: 6px 10px;
+  padding: 5px 10px;
   transition: 0.3s;
 }
-
+  
 .nav-list li a:hover {
   background: #ffd700;
   color: black;
-  border-radius: 6px;
+  border-radius: 5px;
 }
 
 .container {
@@ -182,10 +178,9 @@ select option {
 <header class="header-nav">
   <div class="logo">
     <a href="index.html">
-      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png" alt="Logo">
     </a>
   </div>
-
   <nav>
     <ul class="nav-list">
       <li><a href="index.html">Home</a></li>
