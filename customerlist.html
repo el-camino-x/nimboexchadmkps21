@@ -8,34 +8,82 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
+
 body, html {
   margin: 0;
   padding: 0;
   font-family: 'Poppins', sans-serif;
   color: #fff;
+  overflow-x: hidden;
 }
 
+/* VIDEO BG */
 .video-bg {
   position: fixed;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  z-index: -1;
+  z-index: -2;
 }
 
+/* OVERLAY FIX (biar gak block click) */
 .overlay {
   position: fixed;
   width: 100%;
   height: 100%;
   background: rgba(0,0,0,0.7);
+  z-index: -1;
+}
+
+/* HEADER */
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(20,20,20,0.95);
+  padding: 8px 16px;
+  border-bottom: 2px solid #ffd700;
+
+  position: fixed;  
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
+.header-nav .logo img {
+  height: 45px;
+  border-radius: 8px;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+  padding: 6px 10px;
+  transition: 0.3s;
+}
+
+.nav-list li a:hover {
+  background: #ffd700;
+  color: black;
+  border-radius: 6px;
 }
 
 .container {
   position: relative;
   z-index: 1;
   max-width: 1000px;
-  margin: 30px auto;
-  padding: 20px;
+  margin: 90px auto 20px auto; 
+  padding: 15px;
 }
 
 h1 {
@@ -43,18 +91,41 @@ h1 {
   margin-bottom: 15px;
 }
 
-.filter-box {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+/* FILTER */
+.filter-wrapper {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 }
 
-input, select {
+#search {
+  width: 100%;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.filter-row {
+  display: flex;
+  gap: 10px;
+}
+
+select {
+  flex: 1;
   padding: 10px;
   border-radius: 10px;
   border: none;
   outline: none;
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+select option {
+  color: #000;
 }
 
 .customer-card {
@@ -100,95 +171,11 @@ input, select {
   cursor: pointer;
 }
 
-.header-nav {
-  display: flex;
-  justify-content: space-between; 
-  align-items: center;
-  background: #222;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ffd700;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.header-nav .logo img {
-  height: 50px;   
-  width: auto;
-  border-radius: 10px;
-}
-.nav-list {
-  list-style: none;
-  display: flex;
-  margin: 0;
-  padding: 0;
-}
-.nav-list li a {
-  text-decoration: none;
-  color: white;
-  font-weight: bold;
-  padding: 5px 10px;
-  transition: 0.3s;
-}
-  
-.nav-list li a:hover {
-  background: #ffd700;
-  color: black;
-  border-radius: 5px;
-}
-
-.filter-wrapper {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 20px;
-}
-
-.filter-row {
-  display: flex;
-  gap: 10px;
-}
-
-#search {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-
-select {
-  flex: 1;
-  padding: 10px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  background: rgba(255,255,255,0.1);
-  color: #fff;
-}
-
-select option {
-  color: #000;
-}
 
 </style>
 </head>
 
 <body>
-
-<header class="header-nav">
-  <div class="logo">
-    <a href="index.html">
-      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png" alt="Logo">
-    </a>
-  </div>
-  <nav>
-    <ul class="nav-list">
-      <li><a href="index.html">Home</a></li>
-    </ul>
-  </nav>
-</header>
 
 <video class="video-bg" autoplay muted loop>
   <source src="https://cdn.pixabay.com/video/2019/12/09/30016-378309079_large.mp4">
@@ -196,33 +183,46 @@ select option {
 
 <div class="overlay"></div>
 
+<header class="header-nav">
+  <div class="logo">
+    <a href="index.html">
+      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+    </a>
+  </div>
+
+  <nav>
+    <ul class="nav-list">
+      <li><a href="index.html">Home</a></li>
+    </ul>
+  </nav>
+</header>
+
 <div class="container">
 
   <h1>👥 CUSTOMER LISTING</h1>
 
-<div class="filter-wrapper">
+  <div class="filter-wrapper">
 
-  <input type="text" id="search" placeholder="🔍 CARI NAMA...">
+    <input type="text" id="search" placeholder="🔍 CARI NAMA...">
 
-  <div class="filter-row">
-    <select id="levelFilter">
-      <option value="ALL">ALL LEVEL</option>
-      <option value="NEW">NEW</option>
-      <option value="REGULAR">REGULAR</option>
-      <option value="CEO 👑">CEO</option>
-    </select>
+    <div class="filter-row">
+      <select id="levelFilter">
+        <option value="ALL">ALL LEVEL</option>
+      </select>
 
-    <select id="sortFilter">
-      <option value="desc">💰 PROFIT TERBESAR</option>
-      <option value="asc">💸 PROFIT TERKECIL</option>
-    </select>
+      <select id="sortFilter">
+        <option value="desc">💰 PROFIT TERBESAR</option>
+        <option value="asc">💸 PROFIT TERKECIL</option>
+      </select>
+    </div>
+
   </div>
-
-</div>
 
   <div id="customerList"></div>
 
-  <button class="back-btn" onclick="location.href='index.html'">⬅ BACK</button>
+  <button class="back-btn" onclick="location.href='index.html'">
+    ⬅ BACK
+  </button>
 
 </div>
 
