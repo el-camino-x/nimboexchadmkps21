@@ -11,62 +11,96 @@ const submitBtn = document.getElementById("submit-btn");
 let selectedAgent = "";
 let selectedCurrency = "";
 
-const agentBtns = document.querySelectorAll(".agent-btn");
-agentBtns.forEach(btn => {
+
+document.querySelectorAll(".agent-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     selectedAgent = btn.dataset.agent;
-    agentBtns.forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".agent-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
   });
 });
 
-const currencyBtns = document.querySelectorAll(".currency-btn");
-currencyBtns.forEach(btn => {
+
+document.querySelectorAll(".currency-btn").forEach(btn => {
   btn.addEventListener("click", () => {
     selectedCurrency = btn.dataset.currency;
-    currencyBtns.forEach(b => b.classList.remove("active"));
+    document.querySelectorAll(".currency-btn").forEach(b => b.classList.remove("active"));
     btn.classList.add("active");
   });
 });
+
 
 namaInput.addEventListener("input", () => {
   namaInput.value = namaInput.value.replace(/[^a-zA-Z\s]/g, "");
 });
 
-[rateInput, usdInput, modalInput].forEach(inp => {
-  inp.addEventListener("input", () => {
-    inp.value = inp.value.replace(/[^0-9]/g, "");
-    hitungRupiahProfit();
+function bindInput(el, allowDecimal = false) {
+  el.addEventListener("input", () => {
+    if (allowDecimal) {
+      el.value = el.value.replace(/[^0-9.]/g, "");
+      el.value = el.value.replace(/(\..*)\./g, "$1");
+    } else {
+      el.value = el.value.replace(/[^0-9]/g, "");
+    }
+
+    hitung();
   });
-});
+}
+
+bindInput(rateInput, false);
+bindInput(usdInput, true);  
+bindInput(modalInput, false);
+
 
 function formatRupiah(angka) {
-  return "Rp " + Number(angka).toLocaleString("id-ID");
+  return "Rp " + Number(angka || 0).toLocaleString("id-ID");
 }
 
 function formatDollar(angka) {
-  return "$" + Number(angka).toLocaleString("en-US", { minimumFractionDigits: 2 });
+  return "$" + Number(angka || 0).toLocaleString("en-US", {
+    minimumFractionDigits: 2
+  });
 }
 
-function hitungRupiahProfit() {
-  const rate = Number(rateInput.value) || 0;
-  const totalDollar = Number(usdInput.value) || 0;
-  const modal = Number(modalInput.value) || 0;
 
-  const totalRupiah = rate * totalDollar;
-  const profit = totalRupiah - (modal * totalDollar);
+function hitung() {
+  const rate = parseFloat(rateInput.value) || 0;
+  const usd = parseFloat(usdInput.value) || 0;
+  const modal = parseFloat(modalInput.value) || 0;
+
+  const totalRupiah = rate * usd;
+  const profit = totalRupiah - (modal * usd);
 
   totalRupiahInput.value = formatRupiah(totalRupiah);
-  profitInput.value = formatRupiah(profit);
+
+  if (profit < 0) {
+    profitInput.style.color = "red";
+    profitInput.style.fontWeight = "bold";
+    profitInput.value = "⚠ " + formatRupiah(profit);
+  } else {
+    profitInput.style.color = "lime";
+    profitInput.style.fontWeight = "bold";
+    profitInput.value = formatRupiah(profit);
+  }
+
+  if (modal * usd > totalRupiah) {
+    totalRupiahInput.style.color = "orange";
+  } else {
+    totalRupiahInput.style.color = "white";
+  }
 }
 
+
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbzORBPb6gqDSe2iwXjYGYU9BIGIELSFy-yM9srjvv0n8CnzHTkKLgvBKveq2N2dMIqx1Q/exec";
+
 
 async function loadPendingForms() {
   try {
     const res = await fetch(SHEET_URL + "?action=getAll");
     const data = await res.json();
-    data.forEach(d => addToDashboard(d));
+
+    dashboardBody.innerHTML = "";
+    data.forEach(addToDashboard);
   } catch (err) {
     console.error("Gagal load Pending Form:", err);
   }
@@ -74,8 +108,10 @@ async function loadPendingForms() {
 
 document.addEventListener("DOMContentLoaded", loadPendingForms);
 
+
 form.addEventListener("submit", async e => {
   e.preventDefault();
+
   if (!selectedAgent || !selectedCurrency) {
     return alert("Pilih agent & currency dulu!");
   }
@@ -83,10 +119,11 @@ form.addEventListener("submit", async e => {
   submitBtn.disabled = true;
   submitBtn.innerText = "Mengirim...";
 
-  const tanggal = new Date();
+  const now = new Date();
+
   const data = {
-    tanggal: tanggal.toLocaleDateString("id-ID"),
-    jam: tanggal.toLocaleTimeString("id-ID"),
+    tanggal: now.toISOString(),
+    jam: now.toLocaleTimeString("id-ID"),
     nama: namaInput.value,
     rate: rateInput.value,
     totalDollar: usdInput.value,
@@ -96,32 +133,33 @@ form.addEventListener("submit", async e => {
   };
 
   try {
-    await fetch(SHEET_URL + "?" + new URLSearchParams(data), {
+    await fetch(SHEET_URL, {
       method: "POST",
-      mode: "no-cors"
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json"
+      }
     });
 
     addToDashboard({
-      TANGGAL: data.tanggal,
-      JAM: data.jam,
+      TANGGAL: now,
       NAMA: data.nama,
-      RATE: Number(data.rate),
-      "TOTAL DOLLAR": Number(data.totalDollar),
-      AGENT: data.agent,
-      "TOTAL RUPIAH": Number(data.rate) * Number(data.totalDollar),
-      CURRENCY: data.currency,
-      MODAL: Number(data.modal),
-      PROFIT: (Number(data.rate) * Number(data.totalDollar)) - (Number(data.modal) * Number(data.totalDollar))
+      RATE: data.rate,
+      "TOTAL DOLLAR": data.totalDollar,
+      "TOTAL RUPIAH": data.rate * data.totalDollar,
+      MODAL: data.modal
     });
 
     form.reset();
-    agentBtns.forEach(b => b.classList.remove("active"));
-    currencyBtns.forEach(b => b.classList.remove("active"));
     selectedAgent = "";
     selectedCurrency = "";
+
+    document.querySelectorAll(".active").forEach(b => b.classList.remove("active"));
+
     totalRupiahInput.value = "";
     profitInput.value = "";
-  } catch {
+
+  } catch (err) {
     alert("Gagal mengirim data");
   } finally {
     submitBtn.disabled = false;
@@ -129,21 +167,22 @@ form.addEventListener("submit", async e => {
   }
 });
 
+
 function addToDashboard(d) {
   const tr = document.createElement("tr");
+
+  const tanggal = new Date(d.TANGGAL);
+  const safeTanggal = isNaN(tanggal.getTime())
+    ? "-"
+    : tanggal.toLocaleDateString("id-ID");
+
   tr.innerHTML = `
-    <td>${formatTanggal(d.TANGGAL)}</td>
-    <td>${d.NAMA}</td>
+    <td>${safeTanggal}</td>
+    <td>${d.NAMA || "-"}</td>
     <td>${formatRupiah(d.RATE)}</td>
     <td>${formatDollar(d["TOTAL DOLLAR"])}</td>
     <td>${formatRupiah(d["TOTAL RUPIAH"])}</td>
   `;
-  dashboardBody.appendChild(tr);
-}
 
-function formatTanggal(tanggal) {
-  if (!tanggal) return "-"; 
-  const d = new Date(tanggal);
-  if (isNaN(d)) return tanggal; 
-  return d.toLocaleDateString("id-ID");
+  dashboardBody.appendChild(tr);
 }
