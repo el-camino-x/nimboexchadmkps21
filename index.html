@@ -85,9 +85,22 @@ p {
 
 .home-buttons {
   display: grid;
-  grid-template-columns: repeat(2, max-content); 
-  gap: 15px; 
-  justify-content: center;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+@media (max-width: 500px) {
+  .home-buttons {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .home-buttons button {
+    width: 90%;
+    max-width: 260px;
+  }
 }
 
 
