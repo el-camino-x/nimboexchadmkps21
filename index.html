@@ -202,9 +202,169 @@ p {
   100% { transform: translateX(-100%); }
 }
 
+#lockScreen {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.92);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  z-index: 9999;
+  color: #fff;
+  text-align: center;
+}
+
+/* container biar rapi */
+.lock-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 30px;
+}
+
+/* logo */
+.lock-logo {
+  width: 140px;
+  height: auto;
+  border-radius: 15px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+/* input password */
+#passInput {
+  padding: 12px 15px;
+  width: 220px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 1rem;
+}
+
+/* button enter */
+.lock-btn {
+  padding: 10px 25px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(145deg, #FFD700, #FF69B4);
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.lock-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+
+/* error text */
+#error {
+  color: #ff4d4d;
+  font-size: 0.9rem;
+}
+
+.lock-video-bg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+}
+
+/* dark overlay biar teks kebaca */
+#lockScreen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: -1;
+}
+
+.lock-box {
+  position: relative;
+  z-index: 2;
+}
+
+.pin-input {
+  padding: 12px;
+  width: 180px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-size: 1.5rem;
+  letter-spacing: 5px; 
+  color: black;
+}
+
+@keyframes shake {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+.shake {
+  animation: shake 0.3s;
+}
+
+.pin-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+}
+
+.pin-box {
+  width: 45px;
+  height: 55px;
+  text-align: center;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  color: BLACK;
+  flex: 0 0 auto; 
+}
+
+.pin-container {
+  flex-wrap: nowrap;
+}
+
 </style>
 </head>
 <body>
+
+<div id="lockScreen">
+
+<video autoplay muted loop playsinline class="lock-video-bg">
+  <source src="https://cdn.pixabay.com/video/2024/03/20/204888-925552628_large.mp4" type="video/mp4">
+</video>
+
+  <div class="lock-box">
+
+    <img src="https://i.postimg.cc/Mpky0b4q/Desain-tanpa-judul-Photoroom.png" 
+         class="lock-logo">
+
+<div class="pin-container">
+  <input type="password" maxlength="1" class="pin-box">
+  <input type="password" maxlength="1" class="pin-box">
+  <input type="password" maxlength="1" class="pin-box">
+  <input type="password" maxlength="1" class="pin-box">
+  <input type="password" maxlength="1" class="pin-box">
+  <input type="password" maxlength="1" class="pin-box">
+</div>
+
+    <p id="error"></p>
+
+  </div>
+
+</div>
 
 <video class="video-bg" autoplay muted loop>
   <source src="https://cdn.pixabay.com/video/2019/12/09/30016-378309079_large.mp4" type="video/mp4">
@@ -243,6 +403,64 @@ p {
 function comingSoon() {
   alert("Coming Soon");
 }
+
+const inputs = document.querySelectorAll(".pin-box");
+
+inputs.forEach((input, index) => {
+  input.addEventListener("input", () => {
+    input.value = input.value.replace(/\D/g, "");
+
+    if (input.value && index < inputs.length - 1) {
+      inputs[index + 1].focus();
+    }
+
+    const pass = Array.from(inputs).map(i => i.value).join("");
+    if (pass.length === inputs.length) {
+      checkPass();
+    }
+  });
+
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Backspace" && !input.value && index > 0) {
+      inputs[index - 1].focus();
+    }
+  });
+});
+
+function checkPass() {
+  const pass = Array.from(inputs).map(i => i.value).join("");
+  const correct = "281125";
+
+  if (pass === correct) {
+
+    const lock = document.getElementById("lockScreen");
+
+    lock.style.transition = "0.5s ease";
+    lock.style.opacity = "0";
+
+    setTimeout(() => {
+      lock.style.display = "none";
+    }, 500);
+
+  } else {
+    document.getElementById("error").innerText = "PIN salah!";
+
+    inputs.forEach(input => input.classList.add("shake"));
+
+    setTimeout(() => {
+      inputs.forEach(input => {
+        input.classList.remove("shake");
+        input.value = "";
+      });
+      inputs[0].focus();
+    }, 300);
+  }
+}
+
+window.addEventListener("load", () => {
+  inputs[0].focus();
+});
+
 </script>
 
 </body>
