@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CASBON FORM - NIMBO</title>
+<link rel="stylesheet" href="stylecas.css">
+</head>
+
+<body>
+
+<header class="header-nav">
+  <div class="logo">
+    <a href="index.html">
+      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+    </a>
+  </div>
+
+  <ul class="nav-list">
+    <li><a href="index.html">Home</a></li>
+  </ul>
+</header>
+
+<video class="video-bg" autoplay muted loop>
+  <source src="https://cdn.pixabay.com/video/2019/12/09/30016-378309079_large.mp4">
+</video>
+
+<div class="overlay"></div>
+
+<div class="container">
+
+<h1 class="title-pro">
+  FORM <span>CASBON</span>
+</h1>
+
+<form id="casbon-form">
+
+  <label>TANGGAL</label>
+  <input type="text" id="tanggal" readonly class="auto-field">
+
+  <label>JAM</label>
+  <input type="text" id="jam" readonly class="auto-field">
+
+  <label>NAMA</label>
+  <input type="text" id="nama" placeholder="-" required>
+
+  <label>RATE (RUPIAH)</label>
+  <input type="text" id="rate" required>
+
+  <label>TOTAL DOLLAR</label>
+  <input type="text" id="usd" required>
+
+  <label>CURRENCY</label>
+  <div class="currency-box">
+    <button type="button" id="usd-btn" class="active">USD</button>
+    <button type="button" id="riel-btn">RIEL</button>
+  </div>
+
+  <label>TOTAL RUPIAH</label>
+  <input type="text" id="total-rupiah" readonly class="auto-field">
+
+  <label>BUNGA (%)</label>
+  <input type="text" id="bunga" value="0">
+
+  <label>TOTAL BUNGA</label>
+  <input type="text" id="total-bunga" readonly class="auto-field">
+
+  <label>TOTAL YANG HARUS DIBAYAR</label>
+  <input type="text" id="total-bayar" readonly class="auto-field">
+
+  <label>JATUH TEMPO</label>
+  <input type="date" id="jatuh-tempo">
+
+  <button type="submit">KIRIM CASBON</button>
+
+</form>
+
+<h2 style="text-align:center; margin-top:30px;">PENDING CASBON</h2>
+
+<table id="dashboard">
+  <thead>
+    <tr>
+      <th>Tanggal</th>
+      <th>Jam</th>
+      <th>Nama</th>
+      <th>Rate</th>
+      <th>$</th>
+      <th>Currency</th>
+      <th>Total Rp</th>
+      <th>Bunga</th>
+      <th>Total Bayar</th>
+      <th>Tempo</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+</div>
+
+<script src="scriptcas.js"></script>
+
+</body>
+</html>
