@@ -292,10 +292,10 @@ tr:hover td {
 
 <script>
 
-const API = "https://script.google.com/macros/s/AKfycbzKSqfMqEjK5BIS9U-fpe41e4WFlhvg4I9HAhqr9vzTTNYPIkarv9mhwY2ti_731SyN/exec";
+const API = "https://script.google.com/macros/s/AKfycbzNkMvCxWPe1IzMTPANy79kmPmR3RKVjZvOvsfmXILnuO5JBYAmBQvmBMvcldlR4qJY/exec/exec";
 
 function formatRp(num){
-  return "Rp" + Number(num || 0).toLocaleString("id-ID");
+  return "Rp" + Math.floor(Number(num || 0)).toLocaleString("id-ID");
 }
 
 function formatDate(dateString){
@@ -318,9 +318,13 @@ fetch(API)
 
   document.getElementById("assets").innerText = formatRp(data.total_assets);
 
-  document.getElementById("profit").innerText = formatRp(
-    (data.profit_per_orang || []).reduce((a,b)=>a + (b.profit || 0), 0)
-  );
+const list = data.profit_per_orang || [];
+
+const totalProfit =
+  (list[0]?.profit || 0) +
+  (list[1]?.profit || 0);
+
+document.getElementById("profit").innerText = formatRp(totalProfit);
 
   document.getElementById("suntik").innerText = formatRp(data.suntik_dana_total);
   document.getElementById("casbon").innerText = formatRp(data.casbon_total);
