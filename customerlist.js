@@ -1,3 +1,42 @@
+const sidebar = document.getElementById('sidebar');
+const toggle = document.getElementById('sidebar-toggle');
+const closeBtn = document.getElementById('sidebar-close');
+
+if (toggle) {
+  toggle.addEventListener('click', () => {
+    sidebar.classList.add('active');
+    document.body.classList.add('sidebar-open');
+  });
+}
+
+if (closeBtn) {
+  closeBtn.addEventListener('click', () => {
+    sidebar.classList.remove('active');
+    document.body.classList.remove('sidebar-open');
+  });
+}
+
+document.querySelectorAll('.menu-title').forEach(el => {
+  el.addEventListener('click', () => {
+    const parent = el.closest('.menu-item');
+    if (parent) parent.classList.toggle('active');
+  });
+});
+
+const activePage = window.location.pathname.split("/").pop();
+
+document.querySelectorAll(".menu-title").forEach(link => {
+  const href = link.getAttribute("href");
+
+  if (href && href === activePage) {
+    link.classList.add("active-link");
+
+    const parent = link.closest(".menu-item");
+    if (parent) parent.classList.add("active");
+  }
+});
+
+
 const API_URL = "https://script.google.com/macros/s/AKfycbxyaaq-jueXTgNY8dNVmwYadMmdpzK-pyFbZ2z8gWJ-Ghx21h_Y64yJVTFAAfM2fYbV/exec";
 
 let allData = [];
@@ -12,12 +51,17 @@ let state = {
   sort: "desc"
 };
 
-async function loadCustomer() {
-  const res = await fetch(API_URL);
-  allData = await res.json();
 
-  setupLevelFilter(allData);
-  applyFilter();
+async function loadCustomer() {
+  try {
+    const res = await fetch(API_URL);
+    allData = await res.json();
+
+    setupLevelFilter(allData);
+    applyFilter();
+  } catch (err) {
+    console.error("Fetch error:", err);
+  }
 }
 
 function isEmpty(v) {
@@ -47,6 +91,7 @@ function getLevelBadge(level) {
   return map[level] || level || "-";
 }
 
+
 function setupLevelFilter(data) {
   const select = document.getElementById("levelFilter");
 
@@ -68,6 +113,7 @@ function setupLevelFilter(data) {
     select.innerHTML += `<option value="${l}">${getLevelBadge(l)}</option>`;
   });
 }
+
 
 function applyFilter() {
   let data = [...allData];
@@ -91,10 +137,10 @@ function applyFilter() {
   });
 
   filteredData = data;
-
-  currentPage = 1; 
+  currentPage = 1;
   render();
 }
+
 
 function render() {
   const container = document.getElementById("customerList");
@@ -111,10 +157,7 @@ function render() {
 
     div.innerHTML = `
       <div class="name">${cust.NAMA}</div>
-
-      <div class="badge">
-        ${getLevelBadge(cust.LEVEL)}
-      </div>
+      <div class="badge">${getLevelBadge(cust.LEVEL)}</div>
 
       <div class="row"><span>Total</span><span>${usd(cust.TOTAL)}</span></div>
       <div class="row"><span>TRX</span><span>${cust["TOTAL TRX"] || 0}</span></div>
@@ -129,9 +172,9 @@ function render() {
   renderPagination();
 }
 
+
 function renderPagination() {
   const container = document.getElementById("pagination");
-
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
 
   if (totalPages <= 1) {
@@ -142,21 +185,15 @@ function renderPagination() {
   container.innerHTML = `
     <div style="display:flex;align-items:center;gap:10px;justify-content:center;margin:20px 0;">
 
-      <button 
-        onclick="goToPage(${currentPage - 1})"
-        ${currentPage === 1 ? "disabled" : ""}
-        style="padding:8px 12px;border:none;border-radius:8px;cursor:pointer;background:${currentPage === 1 ? "#444" : "#222"};color:#fff;">
+      <button onclick="goToPage(${currentPage - 1})"
+        ${currentPage === 1 ? "disabled" : ""}>
         ◀ Prev
       </button>
 
-      <div style="padding:8px 14px;background:#111;border-radius:8px;font-weight:bold;">
-        Page ${currentPage} / ${totalPages}
-      </div>
+      <div>Page ${currentPage} / ${totalPages}</div>
 
-      <button 
-        onclick="goToPage(${currentPage + 1})"
-        ${currentPage === totalPages ? "disabled" : ""}
-        style="padding:8px 12px;border:none;border-radius:8px;cursor:pointer;background:${currentPage === totalPages ? "#444" : "#222"};color:#fff;">
+      <button onclick="goToPage(${currentPage + 1})"
+        ${currentPage === totalPages ? "disabled" : ""}>
         Next ▶
       </button>
 
@@ -166,12 +203,12 @@ function renderPagination() {
 
 function goToPage(page) {
   const totalPages = Math.ceil(filteredData.length / itemsPerPage);
-
   if (page < 1 || page > totalPages) return;
 
   currentPage = page;
   render();
 }
+
 
 document.getElementById("search").addEventListener("input", (e) => {
   state.search = e.target.value.toLowerCase();
@@ -188,32 +225,22 @@ document.getElementById("sortFilter").addEventListener("change", (e) => {
   applyFilter();
 });
 
+
 function openCustomerDetail(cust) {
   const html = `
     <div style="display:flex;flex-direction:column;gap:10px;">
-
-      <h2 style="margin:0;">${cust.NAMA}</h2>
+      <h2>${cust.NAMA}</h2>
 
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;font-size:14px;">
-
         <div><b>LEVEL</b></div><div>${getLevelBadge(cust.LEVEL)}</div>
-
         <div><b>DATE REGIST</b></div><div>${formatDateOnly(cust["DATE REGIST"])}</div>
-
         <div><b>LAST TRX</b></div><div>${formatDateOnly(cust["LAST TRX"])}</div>
-
         <div><b>BOUGHT</b></div><div>${usd(cust.BOUGHT)}</div>
-
         <div><b>CASBON</b></div><div>${usd(cust.CASBON)}</div>
-
         <div><b>TRX</b></div><div>${cust["TOTAL TRX"] || 0}</div>
-
         <div><b>SPEND</b></div><div>${rp(cust.SPEND)}</div>
-
         <div><b>PROFIT</b></div><div>${rp(cust.PROFIT)}</div>
-
       </div>
-
     </div>
   `;
 
@@ -228,5 +255,6 @@ function closeModal() {
 function outsideClick(e) {
   if (e.target.id === "globalModal") closeModal();
 }
+
 
 loadCustomer();
