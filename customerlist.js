@@ -183,16 +183,20 @@ function renderPagination() {
   }
 
   container.innerHTML = `
-    <div style="display:flex;align-items:center;gap:10px;justify-content:center;margin:20px 0;">
+    <div class="pagination-wrap">
 
-      <button onclick="goToPage(${currentPage - 1})"
+      <button class="page-btn"
+        onclick="goToPage(${currentPage - 1})"
         ${currentPage === 1 ? "disabled" : ""}>
         ◀ Prev
       </button>
 
-      <div>Page ${currentPage} / ${totalPages}</div>
+      <div class="page-info">
+        Page ${currentPage} / ${totalPages}
+      </div>
 
-      <button onclick="goToPage(${currentPage + 1})"
+      <button class="page-btn"
+        onclick="goToPage(${currentPage + 1})"
         ${currentPage === totalPages ? "disabled" : ""}>
         Next ▶
       </button>
