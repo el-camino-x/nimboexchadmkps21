@@ -20,10 +20,11 @@ body, html {
 
 .header-nav {
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
   align-items: center;
-  background: #222;
+
   padding: 10px 20px;
+  background: #222;
   border-bottom: 2px solid #ffd700;
 
   position: fixed;
@@ -31,6 +32,8 @@ body, html {
   left: 0;
   width: 100%;
   z-index: 1000;
+
+  box-sizing: border-box; 
 }
 
 .header-nav .logo img {
