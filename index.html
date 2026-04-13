@@ -186,6 +186,7 @@ tr:hover td {
   overflow-x: auto;
 }
 
+/* ===== SIDEBAR TOGGLE ===== */
 .sidebar-toggle{
   position: fixed;
   top: 15px;
@@ -202,10 +203,11 @@ body.sidebar-open .sidebar-toggle{
   pointer-events: none;
 }
 
+/* ===== SIDEBAR ===== */
 .sidebar{
   position: fixed;
   top: 0;
-  left: -100%; 
+  left: -100%; /* FULL HIDE FIX */
   width: 280px;
   height: 100vh;
   background: #0b0f14;
@@ -219,6 +221,7 @@ body.sidebar-open .sidebar-toggle{
   left: 0;
 }
 
+/* HEADER */
 .sidebar-header{
   display: flex;
   justify-content: space-between;
@@ -231,6 +234,7 @@ body.sidebar-open .sidebar-toggle{
   text-transform: uppercase;
 }
 
+/* CLOSE BTN */
 .sidebar-close{
   cursor: pointer;
   font-size: 18px;
@@ -243,6 +247,7 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
+/* MENU */
 .menu-title{
   padding: 10px;
   margin-top: 10px;
@@ -260,6 +265,7 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
+/* SUBMENU */
 .submenu{
   display: none;
   flex-direction: column;
@@ -295,8 +301,10 @@ body.sidebar-open .sidebar-toggle{
 
 <body>
 
+<!-- TOGGLE BUTTON -->
 <div class="sidebar-toggle" id="sidebar-toggle">☰</div>
 
+<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
   <div class="sidebar-header">
@@ -392,6 +400,9 @@ body.sidebar-open .sidebar-toggle{
   <p id="trx-yesterday-usd" class="trx-usd">$0</p>
 </div>
 
+<br>
+
+
   </div>
 
   <div class="section-title">👤 Profit Per Orang</div>
@@ -407,6 +418,8 @@ body.sidebar-open .sidebar-toggle{
     </table>
   </div>
 
+<br>
+
   <div class="section-title">💸 Suntik Dana</div>
   <div class="scroll">
     <table>
@@ -420,6 +433,8 @@ body.sidebar-open .sidebar-toggle{
       <tbody id="suntik-body"></tbody>
     </table>
   </div>
+
+<br>
 
   <div class="section-title">🧾 Casbon</div>
   <div class="scroll">
@@ -454,10 +469,12 @@ fetch(API)
 
   console.log("API DATA:", data);
 
+  // ================= SAFE DEFAULT =================
   const profitList = data.profit_per_orang || [];
   const suntikList = data.suntik_dana_list || [];
   const casbonList = data.casbon_list || [];
 
+  // ================= MAIN =================
   document.getElementById("assets").innerText =
     formatRp(data.total_assets || 0);
 
@@ -489,6 +506,7 @@ fetch(API)
     });
   }
 
+  // ================= SUNTIK =================
   const suntikBody = document.getElementById("suntik-body");
   suntikBody.innerHTML = "";
 
@@ -506,6 +524,7 @@ fetch(API)
     });
   }
 
+  // ================= CASBON =================
   const casbonBody = document.getElementById("casbon-body");
   casbonBody.innerHTML = "";
 
@@ -523,6 +542,7 @@ fetch(API)
     });
   }
 
+  // ================= TRANSACTION =================
   const today = data.total_transaction_today || { count:0, usd:0, rp:0 };
   const yesterday = data.total_transaction_yesterday || { count:0, usd:0, rp:0 };
 
