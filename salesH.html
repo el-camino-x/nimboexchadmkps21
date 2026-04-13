@@ -15,8 +15,9 @@ body, html {
   font-family: 'Poppins', sans-serif;
   color: #fff;
   overflow-x: hidden;
-  background: #0b0f14; /* dark clean background */
+  background: #0b0f14;
 }
+  
 thead th:nth-child(4),
 tbody td:nth-child(4) {
   text-align: left;
@@ -117,7 +118,7 @@ h1 {
 }
 
 .filter-item select option {
-  background: #1e1e1e; /* biar gelap premium */
+  background: #1e1e1e; 
   color: #fff;
 }
 
@@ -226,7 +227,6 @@ tr:hover { background: rgba(255,255,255,0.2); }
   color: rgba(255,255,255,0.85);
 }
 
-/* ===== SIDEBAR TOGGLE ===== */
 .sidebar-toggle{
   position: fixed;
   top: 15px;
@@ -238,16 +238,15 @@ tr:hover { background: rgba(255,255,255,0.2); }
   transition: 0.2s ease;
 }
 
-/* ⛔ HIDE TOGGLE SAAT SIDEBAR OPEN */
 body.sidebar-open .sidebar-toggle{
   opacity: 0;
   pointer-events: none;
 }
-/* ===== SIDEBAR ===== */
-.sidebar{
+
+  .sidebar{
   position: fixed;
   top: 0;
-  left: -100%; /* FULL HIDE FIX */
+  left: -100%;
   width: 280px;
   height: 100vh;
   background: #0b0f14;
@@ -287,7 +286,6 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
-/* MENU */
 .menu-title{
   padding: 10px;
   margin-top: 10px;
@@ -305,7 +303,6 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
-/* SUBMENU */
 .submenu{
   display: none;
   flex-direction: column;
@@ -334,10 +331,8 @@ body.sidebar-open .sidebar-toggle{
 </head>
 <body>
 
-<!-- TOGGLE BUTTON -->
 <div class="sidebar-toggle" id="sidebar-toggle">☰</div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
 
   <div class="sidebar-header">
@@ -390,10 +385,8 @@ body.sidebar-open .sidebar-toggle{
   
 <header class="header-nav">
   <div class="logo">
-    <a href="index.html">
-      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png" alt="Logo">
-    </a>
-  </div>
+  <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+</div>
   <nav>
     <ul class="nav-list">
       <li><a href="index.html">Home</a></li>
