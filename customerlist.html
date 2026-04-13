@@ -21,21 +21,23 @@ body, html {
 }
 
 .header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px 20px;
+  background: #222;
+  border-bottom: 2px solid #ffd700;
+
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   z-index: 1000;
 
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #222;
-  padding: 10px 20px;
-  border-bottom: 2px solid #ffd700;
+  box-sizing: border-box; 
 }
- 
-  
+
 .header-nav .logo img {
   height: 50px;
   border-radius: 10px;
@@ -67,7 +69,7 @@ body, html {
   max-width: 1000px;
   margin: 10px auto 20px auto;
   padding: 15px;
-  margin-top: 48px;
+  margin-top: 49px;
 }
 
 h1 {
