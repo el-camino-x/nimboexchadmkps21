@@ -253,7 +253,6 @@ h1 {
   }
 }
 
-/* ===== SIDEBAR TOGGLE ===== */
 .sidebar-toggle{
   position: fixed;
   top: 15px;
@@ -265,16 +264,15 @@ h1 {
   transition: 0.2s ease;
 }
 
-/* ⛔ HIDE TOGGLE SAAT SIDEBAR OPEN */
 body.sidebar-open .sidebar-toggle{
   opacity: 0;
   pointer-events: none;
 }
-/* ===== SIDEBAR ===== */
+  
 .sidebar{
   position: fixed;
   top: 0;
-  left: -100%; /* FULL HIDE FIX */
+  left: -100%;
   width: 280px;
   height: 100vh;
   background: #0b0f14;
@@ -301,7 +299,6 @@ body.sidebar-open .sidebar-toggle{
   text-transform: uppercase;
 }
 
-/* CLOSE BTN */
 .sidebar-close{
   cursor: pointer;
   font-size: 18px;
@@ -314,7 +311,6 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
-/* MENU */
 .menu-title{
   padding: 10px;
   margin-top: 10px;
@@ -332,7 +328,6 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
-/* SUBMENU */
 .submenu{
   display: none;
   flex-direction: column;
@@ -415,11 +410,9 @@ body.sidebar-open .sidebar-toggle{
 
   
 <header class="header-nav">
-  <div class="logo">
-    <a href="index.html">
-      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
-    </a>
-  </div>
+<div class="logo">
+  <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+</div>
 
   <nav>
     <ul class="nav-list">
