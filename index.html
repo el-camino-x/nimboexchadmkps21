@@ -2,470 +2,539 @@
 <html lang="id">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>NIMBO EXCHANGE - Home</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nimbo Dashboard</title>
 <link rel="icon" href="https://i.postimg.cc/NM2wYX5f/image-Photoroom.png" type="image/png">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
 
 body, html {
   margin: 0;
   padding: 0;
-  height: 100%;
   font-family: 'Poppins', sans-serif;
+  color: #fff;
   overflow-x: hidden;
+  background: #0b0f14;
 }
 
-.video-bg {
-  position: fixed;
+.header-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  padding: 10px 20px;
+  border-bottom: 2px solid #ffd700;
+  position: sticky;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -1; 
+  z-index: 100;
 }
 
-
-.overlay {
-  position: fixed;
-  top:0; left:0;
-  width:100%;
-  height:100%;
-  background: rgba(0,0,0,0.6);
-  z-index: 0;
-}
-
-.home-container {
-  position: relative;
-  z-index: 1;
-  text-align: center;
-  max-width: 1000px;
-  margin: 60px auto;
-  padding: 0 20px;
-  color: #fff;
-
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 1s ease forwards;
-}
-
-@keyframes fadeUp {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-  
-.logo-img {
-  max-width: 350px;
-  cursor: pointer;
-  margin-bottom: 30px;
-  transition: transform 0.3s, box-shadow 0.3s;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
-}
-.logo-img:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.7);
-}
-
-h1 {
-  font-size: 3rem;
-  font-weight: 700;
-  margin: 25px 0 10px;
-  text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
-}
-
-p {
-  font-size: 1.1rem;
-  color: #ccc;
-  margin-bottom: 40px;
-}
-
-.home-buttons {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 15px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-@media (max-width: 500px) {
-  .home-buttons {
-    grid-template-columns: 1fr;
-    justify-items: center;
-  }
-
-  .home-buttons button {
-    width: 90%;
-    max-width: 260px;
-  }
-}
-
-
-.home-buttons button {
-  width: 100%;
-  max-width: 200px;
-  height: 70px;
-  background: linear-gradient(145deg, #FFD700, #FF69B4);
-  border: none;
-  border-radius: 15px;
-  font-size: 1rem;
-  font-weight: 600;
-  color: #111;
-  cursor: pointer;
-  box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 5px;
-  overflow: hidden;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.2);
-  line-height: 1.2;
-  word-wrap: break-word;
-}
-
-.home-buttons button:hover {
-  transform: translateY(-5px) scale(1.03);
-  background: linear-gradient(145deg, #FFE066, #FF85C1);
-  box-shadow: 0 14px 30px rgba(0,0,0,0.6);
-  color: #222;
-  text-shadow: 1px 1px 4px rgba(0,0,0,0.6);
-}
-
-.footer {
-  position: relative; 
-  margin-top: 40px;
-  width: 100%;
-  text-align: center;
-  color: #aaa;
-  font-size: 0.8rem;
-  opacity: 0.7;
-}
-
-@media(max-width:600px){
-  h1 { font-size: 2rem; }
-  .home-buttons { gap: 20px; }
-  .home-buttons button { width: 230px; height: 75px; font-size: 1rem; }
-}
-
-.home-buttons button.ready {
-  background: linear-gradient(145deg, #FFD700, #FF69B4);
-  color: #111;
-  cursor: pointer;
-}
-
-.home-buttons button.coming {
-  background: linear-gradient(145deg, #bbb, #eee);
-  color: #666;
-  cursor: default;
-  filter: grayscale(20%);
-}
-
-.home-buttons button.coming:hover {
-  transform: none;
-  box-shadow: none;
-}
-
-.running-text {
-  width: 100%;
-  overflow: hidden;
-  white-space: nowrap;
-  box-sizing: border-box;
-  border-top: 1px solid rgba(255,255,255,0.2); 
-  border-bottom: 1px solid rgba(255,255,255,0.2); 
-  margin: 15px 0;
-}
-
-.running-text span {
-  display: inline-block;
-  padding-left: 100%;
-  animation: scrollText 15s linear infinite;
-  font-size: 1.2rem;
-  font-weight: 700;
-
-  background: linear-gradient(90deg, #FFD700, #FF69B4, #FFA500);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-
-  text-shadow:
-    0 0 3px #FFD700,
-    0 0 6px #FF69B4,
-    0 0 9px #FFA500;
-}
-
-@keyframes scrollText {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-100%); }
-}
-
-#lockScreen {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.92);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  z-index: 9999;
-  color: #fff;
-  text-align: center;
-}
-
-/* container biar rapi */
-.lock-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 30px;
-}
-
-/* logo */
-.lock-logo {
-  width: 140px;
-  height: auto;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
-}
-
-/* input password */
-#passInput {
-  padding: 12px 15px;
-  width: 220px;
+.header-nav .logo img {
+  height: 50px;
   border-radius: 10px;
-  border: none;
-  outline: none;
-  text-align: center;
-  font-size: 1rem;
 }
 
-/* button enter */
-.lock-btn {
-  padding: 10px 25px;
-  border: none;
-  border-radius: 10px;
-  background: linear-gradient(145deg, #FFD700, #FF69B4);
+.nav-list {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-list li a {
+  text-decoration: none;
+  color: white;
   font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
+  padding: 5px 10px;
 }
 
-.lock-btn:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+.container {
+  max-width: 1200px;
+  margin: 20px auto;
+  padding: 0 20px;
 }
 
-/* error text */
-#error {
-  color: #ff4d4d;
-  font-size: 0.9rem;
+/* CARDS */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
 }
 
-.lock-video-bg {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: -2;
+@media(max-width: 600px){
+  .cards {
+    grid-template-columns: 1fr;
+  }
 }
 
-/* dark overlay biar teks kebaca */
-#lockScreen::before {
+.card {
+  position: relative;
+  background: rgba(255,255,255,0.04);
+  border-radius: 14px;
+  padding: 15px;
+  z-index: 1;
+}
+
+.card::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.6);
-  z-index: -1;
+  padding: 1px;
+  border-radius: 14px;
+  background: linear-gradient(
+    90deg,
+    rgba(255,215,0,0.2),
+    rgba(255,255,255,0.05),
+    rgba(255,215,0,0.2)
+  );
+  background-size: 300% 300%;
+  animation: moveBorder 6s linear infinite;
+
+  -webkit-mask: 
+    linear-gradient(#000 0 0) content-box, 
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  pointer-events: none;
 }
 
-.lock-box {
-  position: relative;
-  z-index: 2;
+@keyframes moveBorder {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
 }
 
-.pin-input {
-  padding: 12px;
-  width: 180px;
-  border-radius: 10px;
-  border: none;
-  outline: none;
-  text-align: center;
-  font-size: 1.5rem;
-  letter-spacing: 5px; 
-  color: black;
+.card h3 {
+  margin: 0;
+  font-size: 14px;
+  color: #aaa;
 }
 
-@keyframes shake {
-  0% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  50% { transform: translateX(5px); }
-  75% { transform: translateX(-5px); }
-  100% { transform: translateX(0); }
+.card p {
+  font-size: 22px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
-.shake {
-  animation: shake 0.3s;
+.section-title:not(:first-of-type) {
+  margin-top: 18px;
 }
 
-.pin-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
+.profit { color: #00ff9c; }
+.danger { color: #ff4d4d; }
+.info { color: #4da6ff; }
+
+.section-title {
+  margin: 16px 0 8px;
+  font-size: 15px;
+  font-weight: 600;
+  color: #f0f0f0;
+  border-left: 3px solid rgba(255, 215, 0, 0.4);
+  padding-left: 10px;
+}
+
+table {
   width: 100%;
-}
-
-.pin-box {
-  width: 45px;
-  height: 55px;
-  text-align: center;
-  font-size: 1.5rem;
+  border-collapse: collapse;
+  background: rgba(255,255,255,0.05);
   border-radius: 10px;
-  border: none;
-  outline: none;
-  color: BLACK;
-  flex: 0 0 auto; 
+  overflow: hidden;
+  min-width: 0;
 }
 
-.pin-container {
-  flex-wrap: nowrap;
+th, td {
+  padding: 6px 8px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.2);
+}
+
+th {
+  background: #1b1b1b;
+  color: #eaeaea;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.18);
+}
+
+td {
+  background: rgba(255,255,255,0.02);
+  padding: 7px 8px;
+  font-size: 13px;
+  color: #e6e6e6;
+}
+
+tr:hover {
+  background: rgba(255,255,255,0.15);
+}
+
+tr:hover td {
+  background: rgba(255, 215, 0, 0.06);
+  transition: 0.25s ease;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+/* ===== SIDEBAR TOGGLE ===== */
+.sidebar-toggle{
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  z-index: 10000;
+  font-size: 26px;
+  cursor: pointer;
+  color: #ffd700;
+  transition: 0.2s ease;
+}
+
+body.sidebar-open .sidebar-toggle{
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ===== SIDEBAR ===== */
+.sidebar{
+  position: fixed;
+  top: 0;
+  left: -100%; /* FULL HIDE FIX */
+  width: 280px;
+  height: 100vh;
+  background: #0b0f14;
+  border-right: 1px solid rgba(255,215,0,0.15);
+  transition: 0.3s ease;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.sidebar.active{
+  left: 0;
+}
+
+/* HEADER */
+.sidebar-header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffd700;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+/* CLOSE BTN */
+.sidebar-close{
+  cursor: pointer;
+  font-size: 18px;
+  color: #fff;
+  opacity: 0.7;
+}
+
+.sidebar-close:hover{
+  opacity: 1;
+  color: #ffd700;
+}
+
+/* MENU */
+.menu-title{
+  padding: 10px;
+  margin-top: 10px;
+  background: rgba(255,255,255,0.04);
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  color: #e5e7eb;
+  text-decoration: none;
+  display: block;
+}
+
+.menu-title:hover{
+  background: rgba(255,215,0,0.08);
+  color: #ffd700;
+}
+
+/* SUBMENU */
+.submenu{
+  display: none;
+  flex-direction: column;
+  padding-left: 12px;
+}
+
+.menu-item.active .submenu{
+  display: flex;
+}
+
+.submenu a{
+  padding: 8px;
+  font-size: 14px;
+  color: #aaa;
+  text-decoration: none;
+  border-radius: 6px;
+}
+
+.submenu a:hover{
+  color: #ffd700;
+  background: rgba(255,255,255,0.05);
+}
+
+.menu-title.active-link{
+  background: rgba(255,215,0,0.12);
+  color: #ffd700;
+  border-left: 3px solid #ffd700;
+  padding-left: 10px;
 }
 
 </style>
 </head>
+
 <body>
 
-<div id="lockScreen">
+<!-- TOGGLE BUTTON -->
+<div class="sidebar-toggle" id="sidebar-toggle">☰</div>
 
-<video autoplay muted loop playsinline class="lock-video-bg">
-  <source src="https://cdn.pixabay.com/video/2024/03/20/204888-925552628_large.mp4" type="video/mp4">
-</video>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
 
-  <div class="lock-box">
+  <div class="sidebar-header">
+    <span>NIMBO PANEL</span>
+    <span class="sidebar-close" id="sidebar-close">✕</span>
+  </div>
 
-    <img src="https://i.postimg.cc/Mpky0b4q/Desain-tanpa-judul-Photoroom.png" 
-         class="lock-logo">
+  <div class="menu">
 
-<div class="pin-container">
-  <input type="password" maxlength="1" class="pin-box">
-  <input type="password" maxlength="1" class="pin-box">
-  <input type="password" maxlength="1" class="pin-box">
-  <input type="password" maxlength="1" class="pin-box">
-  <input type="password" maxlength="1" class="pin-box">
-  <input type="password" maxlength="1" class="pin-box">
+    <div class="menu-item">
+      <a class="menu-title" href="dashboard.html">Dashboard</a>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-title">Form</div>
+      <div class="submenu">
+        <a href="form.html">Sales Form</a>
+        <a href="formcas.html">Casbon Form</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-title">History</div>
+      <div class="submenu">
+        <a href="salesH.html">Sales History</a>
+        <a href="casbonH.html">Casbon History</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-title">System</div>
+      <div class="submenu">
+        <a href="balance.html">Balance Bank</a>
+        <a href="customerlist.html">Customer Listing</a>
+      </div>
+    </div>
+
+    <div class="menu-item">
+      <div class="menu-title">Website</div>
+      <div class="submenu">
+        <a href="https://tinyurl.com/nimboexch" target="_blank" rel="noopener noreferrer">
+          🌐 Nimbo Exchange
+        </a>
+      </div>
+    </div>
+    
+  </div>
 </div>
 
-    <p id="error"></p>
+<header class="header-nav">
+  <div class="logo">
+    <a href="index.html">
+      <img src="https://i.postimg.cc/2SXZKpvQ/Desain-tanpa-judul-(8)-Photoroom.png">
+    </a>
+  </div>
+  <ul class="nav-list">
+    <li><a href="index.html">Home</a></li>
+  </ul>
+</header>
 
+<div class="container">
+
+  <h2>📈 Nimbo Dashboard</h2>
+
+  <div class="cards">
+    <div class="card">
+      <h3>Total Assets</h3>
+      <p id="assets" class="info">Rp0</p>
+    </div>
+
+    <div class="card">
+      <h3>Total Profit</h3>
+      <p id="profit" class="profit">Rp0</p>
+    </div>
+
+    <div class="card">
+      <h3>Suntik Dana</h3>
+      <p id="suntik" class="info">Rp0</p>
+    </div>
+
+    <div class="card">
+      <h3>Casbon</h3>
+      <p id="casbon" class="danger">Rp0</p>
+    </div>
+  </div>
+
+  <div class="section-title">👤 Profit Per Orang</div>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Nama</th>
+          <th>Profit</th>
+        </tr>
+      </thead>
+      <tbody id="profit-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section-title">💸 Suntik Dana</div>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Nama</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="suntik-body"></tbody>
+    </table>
+  </div>
+
+  <div class="section-title">🧾 Casbon</div>
+  <div class="scroll">
+    <table>
+      <thead>
+        <tr>
+          <th>Tanggal</th>
+          <th>Nama</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody id="casbon-body"></tbody>
+    </table>
   </div>
 
 </div>
 
-<video class="video-bg" autoplay muted loop>
-  <source src="https://cdn.pixabay.com/video/2019/12/09/30016-378309079_large.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
-
-<div class="overlay"></div>
-
-<div class="home-container">
-  <img src="https://i.postimg.cc/Mpky0b4q/Desain-tanpa-judul-Photoroom.png" 
-       alt="Logo Nimbo Exchange" 
-       class="logo-img"
-       onclick="location.href='index.html'">
-
-<div class="running-text">
-  <span>💰 REZEKI GA KEMANA, TAPI KALAU GA JUALAN YA GA DAPET 💰</span>
-</div>
-
-
-  <h1>NIMBO EXCHANGE PANEL</h1>
-  <p>Pilih menu yang ingin diakses:</p>
-
-<div class="home-buttons">
-  <button class="ready" onclick="location.href='form.html'">💰 FORM SALES</button>
-  <button class="ready" onclick="location.href='formcas.html'">📋 FORM CASBON</button>
-  <button class="ready" onclick="location.href='salesH.html'">📊 HISTORY SALES</button>
-  <button class="ready" onclick="location.href='casbonH.html'">🧾 HISTORY CASBON</button>
-  <button class="ready" onclick="location.href='balance.html'">🏦 BALANCE BANK</button>
-  <button class="ready" onclick="location.href='dashboard.html'">📈 DASHBOARD</button>
-  <button class="ready" onclick="location.href='customerlist.html'">👥 CUSTOMER LISTING</button>
-  <button class="ready" onclick="window.open('https://tinyurl.com/nimboexch', '_blank')">🌐 WEBSITE</button>
-</div>
-
-
 <script>
-function comingSoon() {
-  alert("Coming Soon");
+
+const API = "https://script.google.com/macros/s/AKfycbzNkMvCxWPe1IzMTPANy79kmPmR3RKVjZvOvsfmXILnuO5JBYAmBQvmBMvcldlR4qJY/exec/exec";
+
+function formatRp(num){
+  return "Rp" + Math.floor(Number(num || 0)).toLocaleString("id-ID");
 }
 
-const inputs = document.querySelectorAll(".pin-box");
+function formatDate(dateString){
+  if(!dateString) return "-";
 
-inputs.forEach((input, index) => {
-  input.addEventListener("input", () => {
-    input.value = input.value.replace(/\D/g, "");
+  const date = new Date(dateString);
+  if(isNaN(date.getTime())) return "-";
 
-    if (input.value && index < inputs.length - 1) {
-      inputs[index + 1].focus();
-    }
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
 
-    const pass = Array.from(inputs).map(i => i.value).join("");
-    if (pass.length === inputs.length) {
-      checkPass();
-    }
+fetch(API)
+.then(r => r.json())
+.then(data => {
+
+
+  document.getElementById("assets").innerText = formatRp(data.total_assets);
+
+const list = data.profit_per_orang || [];
+
+const totalProfit =
+  (list[0]?.profit || 0) +
+  (list[1]?.profit || 0);
+
+document.getElementById("profit").innerText = formatRp(totalProfit);
+
+  document.getElementById("suntik").innerText = formatRp(data.suntik_dana_total);
+  document.getElementById("casbon").innerText = formatRp(data.casbon_total);
+
+
+  const profitBody = document.getElementById("profit-body");
+  profitBody.innerHTML = "";
+
+  (data.profit_per_orang || []).forEach(p=>{
+    profitBody.innerHTML += `
+      <tr>
+        <td>${p.nama}</td>
+        <td>${formatRp(p.profit)}</td>
+      </tr>
+    `;
   });
 
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Backspace" && !input.value && index > 0) {
-      inputs[index - 1].focus();
-    }
+
+  const suntikBody = document.getElementById("suntik-body");
+  suntikBody.innerHTML = "";
+
+  (data.suntik_dana_list || []).forEach(s=>{
+    suntikBody.innerHTML += `
+      <tr>
+        <td>${formatDate(s.tanggal)}</td>
+        <td>${s.nama}</td>
+        <td>${formatRp(s.total)}</td>
+      </tr>
+    `;
+  });
+
+
+  const casbonBody = document.getElementById("casbon-body");
+  casbonBody.innerHTML = "";
+
+  (data.casbon_list || []).forEach(c=>{
+    casbonBody.innerHTML += `
+      <tr>
+        <td>${formatDate(c.tanggal)}</td>
+        <td>${c.nama}</td>
+        <td>${formatRp(c.total)}</td>
+      </tr>
+    `;
+  });
+
+})
+.catch(err => {
+  console.error("API ERROR:", err);
+});
+
+const sidebar = document.getElementById('sidebar');
+const toggle = document.getElementById('sidebar-toggle');
+const closeBtn = document.getElementById('sidebar-close');
+
+toggle.addEventListener('click', () => {
+  sidebar.classList.add('active');
+  document.body.classList.add('sidebar-open');
+});
+
+closeBtn.addEventListener('click', () => {
+  sidebar.classList.remove('active');
+  document.body.classList.remove('sidebar-open');
+});
+
+document.querySelectorAll('.menu-title').forEach(el => {
+  el.addEventListener('click', () => {
+    const parent = el.closest('.menu-item');
+    if (parent) parent.classList.toggle('active');
   });
 });
 
-function checkPass() {
-  const pass = Array.from(inputs).map(i => i.value).join("");
-  const correct = "281125";
-
-  if (pass === correct) {
-
-    const lock = document.getElementById("lockScreen");
-
-    lock.style.transition = "0.5s ease";
-    lock.style.opacity = "0";
-
-    setTimeout(() => {
-      lock.style.display = "none";
-    }, 500);
-
-  } else {
-    document.getElementById("error").innerText = "PIN salah!";
-
-    inputs.forEach(input => input.classList.add("shake"));
-
-    setTimeout(() => {
-      inputs.forEach(input => {
-        input.classList.remove("shake");
-        input.value = "";
-      });
-      inputs[0].focus();
-    }, 300);
-  }
-}
-
-window.addEventListener("load", () => {
-  inputs[0].focus();
-});
 
 </script>
 
 </body>
-<footer class="footer">
-  © 2026 NIMBO EXCHANGE
-</footer>
-
 </html>
