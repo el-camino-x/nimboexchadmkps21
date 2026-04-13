@@ -238,12 +238,10 @@ body.sidebar-open .sidebar-toggle{
   padding: 20px;
 }
 
-/* OPEN */
 .sidebar.active{
   left: 0;
 }
 
-/* HEADER */
 .sidebar-header{
   display: flex;
   justify-content: space-between;
@@ -256,7 +254,6 @@ body.sidebar-open .sidebar-toggle{
   text-transform: uppercase;
 }
 
-/* CLOSE BUTTON */
 .sidebar-close{
   cursor: pointer;
   font-size: 18px;
@@ -286,7 +283,6 @@ body.sidebar-open .sidebar-toggle{
   color: #ffd700;
 }
 
-/* SUBMENU */
 .submenu{
   display: none;
   flex-direction: column;
@@ -404,16 +400,12 @@ body.sidebar-open .sidebar-toggle{
       </select>
     </div>
 
-  </div>
-
+</div>
   <div id="customerList"></div>
-
   <div id="pagination"></div>
-
   <button class="back-btn" onclick="location.href='index.html'">
     ⬅ BACK
   </button>
-
 </div>
 
 <div id="globalModal" class="modal hidden" onclick="outsideClick(event)">
@@ -423,50 +415,6 @@ body.sidebar-open .sidebar-toggle{
   </div>
 </div>
 
-
-<script>
-const sidebar = document.getElementById('sidebar');
-const toggle = document.getElementById('sidebar-toggle');
-const closeBtn = document.getElementById('sidebar-close');
-
-// OPEN
-toggle.addEventListener('click', () => {
-  sidebar.classList.add('active');
-  document.body.classList.add('sidebar-open'); // 🔥 penting
-});
-
-// CLOSE
-closeBtn.addEventListener('click', () => {
-  sidebar.classList.remove('active');
-  document.body.classList.remove('sidebar-open');
-});
-
-// CLICK MENU
-document.querySelectorAll('.menu-title').forEach(el => {
-  el.addEventListener('click', () => {
-    const parent = el.closest('.menu-item');
-    if (parent) parent.classList.toggle('active');
-  });
-});
-
-const currentPage = window.location.pathname.split("/").pop();
-
-document.querySelectorAll(".menu-title").forEach(link => {
-  const href = link.getAttribute("href");
-
-  if (href && href === currentPage) {
-    link.classList.add("active-link");
-
-    const parent = link.closest(".menu-item");
-    if (parent) parent.classList.add("active");
-  }
-});
-
-</script>
-
 <script src="customerlist.js"></script>
-
-
-
 </body>
 </html>
